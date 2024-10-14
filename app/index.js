@@ -2,14 +2,17 @@
 
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Image, Pressable, Text } from "react-native";
+import { Image, Pressable, Text, TouchableOpacity } from "react-native";
 import { View, StyleSheet } from "react-native";
 import { hp, wp } from "../helpers/common";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { theme } from "../constants/theme";
+import { useRouter } from "expo-router";
 
 function WelcomeScreen(props) {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -47,12 +50,12 @@ function WelcomeScreen(props) {
           </Animated.Text>
           {/* start btn */}
           <Animated.View entering={FadeInDown.duration(700).springify()}>
-            <Pressable
+            <TouchableOpacity
               style={styles.startbtn}
-              onPress={() => console.log("pressed")}
+              onPress={() => router.push("home")}
             >
               <Text style={styles.startbtnText}>Start Exploring</Text>
-            </Pressable>
+            </TouchableOpacity>
           </Animated.View>
         </View>
       </Animated.View>
