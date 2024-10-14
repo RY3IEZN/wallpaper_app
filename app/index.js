@@ -49,7 +49,7 @@ function WelcomeScreen(props) {
             Every Art tells a tale
           </Animated.Text>
           {/* start btn */}
-          <Animated.View entering={FadeInDown.duration(700).springify()}>
+          <Animated.View entering={FadeInDown.duration(600).springify()}>
             <TouchableOpacity
               style={styles.startbtn}
               onPress={() => router.push("home")}

@@ -5,23 +5,29 @@ import { View, StyleSheet, FlatList, Text, Pressable } from "react-native";
 import { data } from "../constants/data";
 import { hp, wp } from "../helpers/common";
 import { theme } from "../constants/theme";
+import Animated, { FadeInRight } from "react-native-reanimated";
 
 function Categories({ activeCategory, handleCategoryChange }) {
-  const CategoryItem = ({ title, isActive, handleCategoryChange }) => {
+  const CategoryItem = ({ title, isActive, handleCategoryChange, index }) => {
     let textColor = isActive ? theme.colors.white : theme.colors.neutral(0.8);
     let backgroundColor = isActive
       ? theme.colors.neutral(0.8)
       : theme.colors.white;
 
     return (
-      <View>
+      <Animated.View
+        entering={FadeInRight.delay(index * 200)
+          .duration(1000)
+          .springify()
+          .damping(14)}
+      >
         <Pressable
           onPress={() => handleCategoryChange(isActive ? null : title)}
           style={[styles.category, { backgroundColor }]}
         >
           <Text style={[styles.title, { color: textColor }]}>{title}</Text>
         </Pressable>
-      </View>
+      </Animated.View>
     );
   };
   return (

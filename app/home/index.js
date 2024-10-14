@@ -1,7 +1,7 @@
 /** @format */
 
 import { Feather, FontAwesome6, Ionicons } from "@expo/vector-icons";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -14,13 +14,31 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { theme } from "../../constants/theme";
 import { hp, wp } from "../../helpers/common";
 import Categories from "../../components/Categories";
+import { apiCall } from "../../api/api";
+import ImageGrid from "../../components/ImageGrid";
 
 function HomeScreen(props) {
   const top = useSafeAreaInsets();
   const paddingTop = top > 0 ? (top = 10) : 30;
   const [search, setSearch] = useState("");
-  const searchInputRef = useRef(null);
+  const [images, setImages] = useState([]);
   const [activeCategory, setActiveCategory] = useState("");
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    // fetchImages();
+  }, []);
+
+  const fetchImages = async (params = { page: 1 }, append = false) => {
+    let response = await apiCall(params);
+    if (response.success && response?.data?.hits) {
+      if (append) {
+        setImages([...images, ...response.data.hits]);
+      }
+      setImages([...response.data.hits]);
+    }
+    console.log("response", response.data);
+  };
 
   // change the active category
   const handleCategoryChange = (cat) => {
@@ -74,6 +92,8 @@ function HomeScreen(props) {
             handleCategoryChange={handleCategoryChange}
           />
         </View>
+        {/* images mansory grid */}
+        <View>{images.length > 0 && <ImageGrid images={images} />}</View>
       </ScrollView>
     </View>
   );
