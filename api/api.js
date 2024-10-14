@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-const API_KEY = "46512107-c348a6a5abc48a8fd682eefb6";
+const API_KEY = "";
 
 const apiUrl = `https://pixabay.com/api/?key=${API_KEY}`;
 
